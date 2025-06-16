@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mini_project_five/screens/mapPage.dart';
 import 'data/getData.dart';
+import 'package:mini_project_five/screens/splitscreen.dart';
+import 'package:mini_project_five/screens/testmap.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeLeft, // Left-side Landscape
+    DeviceOrientation.landscapeRight, // Right-side Landscape
+  ]);
   await BusData().loadData();
   runApp(MyApp());
 }
@@ -32,7 +39,9 @@ class _MyAppState extends State<MyApp> {
       theme: isDarkMode ? ThemeData.dark() : ThemeData.light(),
       initialRoute: '/home',
       routes: {
-      '/home' : (context) => Map_Page(),
+      '/home' : (context) => testMap_Page(),
+        // '/home' : (context) => Map_Page(),
+      //   '/home' : (context) => SplitScreenMapPage(),
       },
     );
   }

@@ -41,7 +41,8 @@ dependencies:
   circular_menu: ^2.0.1
   flutter_spinkit: ^5.2.0
   flutter_polyline_points: ^2.0.0
-  flutter_compass: ^0.7.0
+#  flutter_compass: ^0.7.0
+  flutter_compass: ^0.8.1
   sliding_up_panel: ^2.0.0+1
   flutter_switch: ^0.3.2
   amplify_core: ^2.0.0
