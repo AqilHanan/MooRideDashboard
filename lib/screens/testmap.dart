@@ -67,6 +67,8 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
   Timer? _bus2Timeout;
   Timer? _bus3Timeout;
 
+  final mapController = MapController();
+
 
 
   LocationService _locationService = LocationService();
@@ -86,6 +88,9 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
   LatLng LCT = LatLng(1.330895, 103.774870);
   LatLng B72 = LatLng(1.3314596165361228, 103.7761976140868);
   LatLng OPP_KAP = LatLng(1.336274, 103.783146); //OPP KAP
+
+  LatLng? lastCenteredLocation;
+
 
 
   List<LatLng> AM_KAP = [
@@ -149,6 +154,25 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
     _getLocation();
     _mqttConnect = MQTT_Connect();
     _mqttConnect.createState().initState(); // Assuming you have this function in your MQTT_Connect class.
+
+
+
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (selectedBus == 1 && Bus1_Location != null) {
+        if (Bus1_Location != lastCenteredLocation) {
+          centerMapOnSelectedBus();
+          print("Polling: Centering on new location");
+        }
+      } else if (selectedBus == 2 && Bus2_Location != null) {
+        if (Bus2_Location != lastCenteredLocation) {
+          centerMapOnSelectedBus();
+        }
+      } else if (selectedBus == 3 && Bus3_Location != null) {
+        if (Bus3_Location != lastCenteredLocation) {
+          centerMapOnSelectedBus();
+        }
+      }
+    });
 
     // Subscribe to the ValueNotifier for bus location updates
     // BUS 1
@@ -293,10 +317,28 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
     // BUS 3
   }
 
+  void centerMapOnSelectedBus() {
+    LatLng? selectedLocation;
+
+    if (selectedBus == 1) {
+      selectedLocation = Bus1_Location;
+    } else if (selectedBus == 2) {
+      selectedLocation = Bus2_Location;
+    } else if (selectedBus == 3) {
+      selectedLocation = Bus3_Location;
+    }
+
+    if (selectedLocation != null && selectedLocation != lastCenteredLocation) {
+      mapController.move(selectedLocation, 18.0);
+      lastCenteredLocation = selectedLocation;
+    }
+  }
+
   void _resetBus1Timeout() {
     _bus1Timeout?.cancel();
     _bus1Timeout = Timer(Duration(seconds: 30), () {
       setState(() {
+        print("timing bus1 out");
         Bus1_Location = null;
         Bus1_Time = null;
         Bus1_Speed = null;
@@ -311,6 +353,7 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
     _bus2Timeout?.cancel();
     _bus2Timeout = Timer(Duration(seconds: 30), () {
       setState(() {
+        print("timing bus2 out");
         Bus2_Location = null;
         Bus2_Time = null;
         Bus2_Speed = null;
@@ -325,6 +368,7 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
     _bus3Timeout?.cancel();
     _bus3Timeout = Timer(Duration(seconds: 30), () {
       setState(() {
+        print("timing bus3 out");
         Bus3_Location = null;
         Bus3_Time = null;
         Bus3_Speed = null;
@@ -544,7 +588,16 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
                                             onPressed: () {
                                               setState(() {
                                                 selectedBus = index + 1;
-
+                                                if (selectedBus == 1) {
+                                                  fetchRoute(PM_KAP);
+                                                }
+                                                if (selectedBus == 2) {
+                                                  fetchRoute(PM_KAP);
+                                                }
+                                                if (selectedBus == 3) {
+                                                  fetchRoute(PM_CLE);
+                                                }
+                                                centerMapOnSelectedBus();
                                               });
                                             },
                                             child: Text('B${index + 1}'),
@@ -687,10 +740,9 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
                 children: [
                   Expanded(
                     child: Stack(
-
-
                   children: [
                     FlutterMap(
+                      mapController: mapController,
                       options: MapOptions(
                         //initialCenter: LatLng(currentLocation!.latitude, currentLocation!.longitude),
                         initialCenter: currentLocation == null ? LatLng(
@@ -792,9 +844,10 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
                                         Icon(
                                           Icons.directions_bus,
                                           // Icons.circle_sharp,
-                                          color: _isDarkMode ? Colors
-                                              .lightBlueAccent : Colors
-                                              .blue[900],
+                                          // color: _isDarkMode ? Colors
+                                          //     .lightBlueAccent : Colors
+                                          //     .blue[900],
+                                          color: Colors.red,
                                           size: 17,
                                         ),
                                       ],
@@ -823,8 +876,9 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
                                       Icon(
                                         Icons.directions_bus,
                                         // Icons.circle_sharp,
-                                        color: _isDarkMode ? Colors
-                                            .lightBlueAccent : Colors.blue[900],
+                                        // color: _isDarkMode ? Colors
+                                        //     .lightBlueAccent : Colors.blue[900],
+                                        color: Colors.red,
                                         size: 17,
                                       ),
                                     ],
@@ -854,9 +908,10 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
                                           Icons.directions_bus,
                                           // Icons.circle_sharp,
                                           // color: Colors.blue[900],
-                                          color: _isDarkMode ? Colors
-                                              .lightBlueAccent : Colors
-                                              .blue[900],
+                                          // color: _isDarkMode ? Colors
+                                          //     .lightBlueAccent : Colors
+                                          //     .blue[900],
+                                          color: Colors.red,
                                           size: 17,
                                         ),
                                       ],
@@ -900,9 +955,7 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
                                   child: Icon(
                                     CupertinoIcons.location_circle_fill,
                                     // color: Colors.red,
-                                    color: _isDarkMode
-                                        ? Colors.blue[900]
-                                        : Colors.red,
+                                    color: Colors.blue[900],
                                     size: (25),
                                   ),
                                 ),
@@ -932,9 +985,7 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
                                   child: Icon(
                                     CupertinoIcons.location_circle_fill,
                                     // color: Colors.red,
-                                    color: _isDarkMode
-                                        ? Colors.blue[900]
-                                        : Colors.red,
+                                    color: Colors.blue[900],
                                     size: (25),
                                   ),
                                 ),

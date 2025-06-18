@@ -90,6 +90,9 @@ class _MQTT_ConnectState extends State<MQTT_Connect> {
   double latitude = 0;
   double longitude = 0;
 
+  final randomClientID = 'busTrackerApp_${DateTime.now().millisecondsSinceEpoch}';
+
+
   @override
   void initState() {
     super.initState();
@@ -189,7 +192,8 @@ class _MQTT_ConnectState extends State<MQTT_Connect> {
         client.updates!.listen(_onMessage);}
 
       final MqttConnectMessage connMess = MqttConnectMessage()
-          .withClientIdentifier(uniqueID)
+          // .withClientIdentifier(uniqueID)
+          .withClientIdentifier(randomClientID)
           .startClean();
       client.connectionMessage = connMess;
       print('printing connMess: ${connMess}');
