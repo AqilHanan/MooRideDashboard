@@ -1256,142 +1256,142 @@ class _testMap_PageState extends State<testMap_Page> with WidgetsBindingObserver
                                 ),
                               ),
                             ]),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 30.0, 10.0, 0),
-                          child: CircularMenu(
-                              alignment: Alignment.topRight,
-                              radius: 80.0,
-                              toggleButtonColor: Colors.cyan,
-                              curve: Curves.easeInOut,
-                              items: [
-                                CircularMenuItem(
-                                    color: Colors.yellow[300],
-                                    iconSize: 30.0,
-                                    margin: 10.0,
-                                    padding: 10.0,
-                                    icon: Icons.info_rounded,
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                          builder: (context) =>
-                                              Information_Page(
-                                                  isDarkMode: _isDarkMode)));
-                                    }
-                                ),
-                                CircularMenuItem(
-                                    color: Colors.green[300],
-                                    iconSize: 30.0,
-                                    margin: 10.0,
-                                    padding: 10.0,
-                                    icon: Icons.settings,
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                          builder: (context) =>
-                                              Settings(isDarkMode: _isDarkMode,
-                                                  onThemeChanged: _toggleTheme)));
-                                    }
-                                ),
-                                CircularMenuItem(
-                                    color: Colors.pink[300],
-                                    iconSize: 30.0,
-                                    margin: 10.0,
-                                    padding: 10.0,
-                                    icon: Icons.newspaper,
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                          builder: (context) =>
-                                              NewsAnnouncement(
-                                                  isDarkMode: _isDarkMode)));
-                                    }
-                                ),
-                              ]
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 40.0, 0.0, 0),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: ClipOval(
-                              child: Image.asset(
-                                'images/logo.jpeg',
-                                width: 70,
-                                height: 70,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.fromLTRB(0, 30.0, 10.0, 0),
+                        //   child: CircularMenu(
+                        //       alignment: Alignment.topRight,
+                        //       radius: 80.0,
+                        //       toggleButtonColor: Colors.cyan,
+                        //       curve: Curves.easeInOut,
+                        //       items: [
+                        //         CircularMenuItem(
+                        //             color: Colors.yellow[300],
+                        //             iconSize: 30.0,
+                        //             margin: 10.0,
+                        //             padding: 10.0,
+                        //             icon: Icons.info_rounded,
+                        //             onTap: () {
+                        //               Navigator.push(context, MaterialPageRoute(
+                        //                   builder: (context) =>
+                        //                       Information_Page(
+                        //                           isDarkMode: _isDarkMode)));
+                        //             }
+                        //         ),
+                        //         CircularMenuItem(
+                        //             color: Colors.green[300],
+                        //             iconSize: 30.0,
+                        //             margin: 10.0,
+                        //             padding: 10.0,
+                        //             icon: Icons.settings,
+                        //             onTap: () {
+                        //               Navigator.push(context, MaterialPageRoute(
+                        //                   builder: (context) =>
+                        //                       Settings(isDarkMode: _isDarkMode,
+                        //                           onThemeChanged: _toggleTheme)));
+                        //             }
+                        //         ),
+                        //         CircularMenuItem(
+                        //             color: Colors.pink[300],
+                        //             iconSize: 30.0,
+                        //             margin: 10.0,
+                        //             padding: 10.0,
+                        //             icon: Icons.newspaper,
+                        //             onTap: () {
+                        //               Navigator.push(context, MaterialPageRoute(
+                        //                   builder: (context) =>
+                        //                       NewsAnnouncement(
+                        //                           isDarkMode: _isDarkMode)));
+                        //             }
+                        //         ),
+                        //       ]
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.fromLTRB(8.0, 40.0, 0.0, 0),
+                        //   child: Align(
+                        //     alignment: Alignment.topLeft,
+                        //     child: ClipOval(
+                        //       child: Image.asset(
+                        //         'images/logo.jpeg',
+                        //         width: 70,
+                        //         height: 70,
+                        //         fit: BoxFit.cover,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
-                    SlidingUpPanel(
-                      onPanelOpened: _onPanelOpened,
-                      onPanelClosed: _onPanelClosed,
-                      panelBuilder: (controller) {
-                        return Container(
-                          color: _isDarkMode ? Colors.lightBlue[900] : Colors.lightBlue[100],
-                          child: SingleChildScrollView(
-                            controller: controller,
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                minHeight: 0,
-                                maxHeight: MediaQuery.of(context).size.height * 0.7,
-                              ),
-                              child: IntrinsicHeight(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Title
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'MooBus on-demand',
-                                          style: TextStyle(
-                                            color: _isDarkMode ? Colors.white : Colors.black,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Montserrat',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-
-                                    // Display page
-                                    displayPage,
-
-                                    // Spacing
-                                    SizedBox(height: 16),
-
-                                    // News widget
-                                    News_Announcement_Widget(isDarkMode: _isDarkMode),
-
-                                    // Additional spacing
-                                    SizedBox(height: 20),
-
-                                    // Bus info (ensure all are Strings or use toString)
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('${Bus1_Stop ?? "Stop: N/A"}'),
-                                          Text('${Bus1_Speed ?? "Speed: N/A"}'),
-                                          Text('${Bus1_Count ?? "Count: N/A"}'),
-                                          Text('${Bus1_ETA ?? "ETA: N/A"}'),
-                                          Text('${Bus1_Time ?? "Time: N/A"}'),
-                                        ],
-                                      ),
-                                    ),
-
-                                    SizedBox(height: 16),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                    // SlidingUpPanel(
+                    //   onPanelOpened: _onPanelOpened,
+                    //   onPanelClosed: _onPanelClosed,
+                    //   panelBuilder: (controller) {
+                    //     return Container(
+                    //       color: _isDarkMode ? Colors.lightBlue[900] : Colors.lightBlue[100],
+                    //       child: SingleChildScrollView(
+                    //         controller: controller,
+                    //         child: ConstrainedBox(
+                    //           constraints: BoxConstraints(
+                    //             minHeight: 0,
+                    //             maxHeight: MediaQuery.of(context).size.height * 0.7,
+                    //           ),
+                    //           child: IntrinsicHeight(
+                    //             child: Column(
+                    //               crossAxisAlignment: CrossAxisAlignment.start,
+                    //               children: [
+                    //                 // Title
+                    //                 Align(
+                    //                   alignment: Alignment.centerLeft,
+                    //                   child: Padding(
+                    //                     padding: const EdgeInsets.all(8.0),
+                    //                     child: Text(
+                    //                       'MooBus on-demand',
+                    //                       style: TextStyle(
+                    //                         color: _isDarkMode ? Colors.white : Colors.black,
+                    //                         fontSize: 18,
+                    //                         fontWeight: FontWeight.bold,
+                    //                         fontFamily: 'Montserrat',
+                    //                       ),
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //
+                    //                 // Display page
+                    //                 displayPage,
+                    //
+                    //                 // Spacing
+                    //                 SizedBox(height: 16),
+                    //
+                    //                 // News widget
+                    //                 News_Announcement_Widget(isDarkMode: _isDarkMode),
+                    //
+                    //                 // Additional spacing
+                    //                 SizedBox(height: 20),
+                    //
+                    //                 // Bus info (ensure all are Strings or use toString)
+                    //                 Padding(
+                    //                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    //                   child: Column(
+                    //                     crossAxisAlignment: CrossAxisAlignment.start,
+                    //                     children: [
+                    //                       Text('${Bus1_Stop ?? "Stop: N/A"}'),
+                    //                       Text('${Bus1_Speed ?? "Speed: N/A"}'),
+                    //                       Text('${Bus1_Count ?? "Count: N/A"}'),
+                    //                       Text('${Bus1_ETA ?? "ETA: N/A"}'),
+                    //                       Text('${Bus1_Time ?? "Time: N/A"}'),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //
+                    //                 SizedBox(height: 16),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),sliding
 
                   ],
                 ),
